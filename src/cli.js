@@ -19,20 +19,18 @@ function parseArgumentsIntoOptions(rawArgs) {
 
     let extensionTypeIndex = 0;
     let moduleTypeIndex = 1;
-    let personaBarModuleTypeIndex = 1;
 
     if (args._[0] === 'create-extension') {
         extensionTypeIndex++;
         moduleTypeIndex++;
-        personaBarModuleTypeIndex++;
     }
 
     return {
         skipPrompts: args['--yes'] || false,
         git: args['--git'] || false,
         extensionType: args._[extensionTypeIndex],
-        moduleType: (args._[extensionTypeIndex].toLowerCase() === 'module' ? args._[moduleTypeIndex] : undefined),
-        personaBarModuleType: (args._[extensionTypeIndex].toLowerCase() === 'persona bar' ? args._[personaBarModuleTypeIndex] : undefined),
+        moduleType: args._[moduleTypeIndex],
+        personaBarModuleType: args._[moduleTypeIndex],
         runInstall: args['--install'] || false,
     };
 }
@@ -83,7 +81,7 @@ async function promptForMissingOptions(options) {
             type: 'list',
             name: 'moduleType',
             message: 'Please choose a module type to use (if applicable)',
-            when: (answers) => answers.extensionType === 'Module',
+            when: (answers) => answers.extensionType === 'Module' || (options.extensionType ? options.extensionType.toLowerCase() === 'module' : false),
             choices: [
                 'SPA', 
                 'MVC', 
@@ -99,7 +97,7 @@ async function promptForMissingOptions(options) {
           type: 'list',
           name: 'personaBarModuleType',
           message: 'Please choose a Persona Bar module type to use',
-          when: (answers) => answers.extensionType === 'Persona Bar',
+          when: (answers) => answers.extensionType === 'Persona Bar' || (options.extensionType ? options.extensionType.toLowerCase() === 'persona bar' : false),
           choices: [
               'HTML',
               'React',
