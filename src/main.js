@@ -35,7 +35,7 @@ export async function createProject(options) {
     const currentFileUrl = import.meta.url;
     let templateDir = path.resolve(
         new URL(currentFileUrl).pathname,
-        path.normalize('../../extensions'),
+        path.normalize('../../extensions'), // normalize path for cross-platform support
         options.extensionType.replace(' ', '-').toLowerCase()
     );
     if (options.moduleType !== undefined) templateDir = path.resolve(templateDir, options.moduleType.replace(' ', '-').toLowerCase());
