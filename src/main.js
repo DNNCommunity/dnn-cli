@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs';
 import ncp from 'ncp';
 import path from 'path';
+import url from 'url';
 import { promisify } from 'util';
 import execa from 'execa';
 import Listr from 'listr';
@@ -34,7 +35,7 @@ export async function createProject(options) {
 
     const currentFileUrl = import.meta.url;
     let templateDir = path.resolve(
-        new URL(currentFileUrl).pathname,
+        url.fileURLToPath(currentFileUrl),
         '..',
         '..',
         'extensions',
