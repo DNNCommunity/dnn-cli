@@ -1,7 +1,7 @@
 {
   "name": "@dnncommunity/dnn-cli",
   "version": "0.0.2",
-  "description": "A CLI for developing DNN extensions",
+  "description": "A CLI for developing DNN extensions and working with DNN",
   "main": "src/index.js",
   "bin": {
     "@dnncommunity/dnn": "bin/create-extension",
