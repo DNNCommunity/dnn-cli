@@ -19,17 +19,20 @@ function parseArgumentsIntoOptions(rawArgs) {
 
     let extensionTypeIndex = 0;
     let moduleTypeIndex = 1;
+    let personaBarModuleTypeIndex = 1;
 
     if (args._[0] === 'create-extension') {
         extensionTypeIndex++;
         moduleTypeIndex++;
+        personaBarModuleTypeIndex++;
     }
 
     return {
         skipPrompts: args['--yes'] || false,
         git: args['--git'] || false,
         extensionType: args._[extensionTypeIndex],
-        moduleType: args._[moduleTypeIndex],
+        moduleType: (args._[extensionTypeIndex].toLowerCase() === 'module' ? args._[moduleTypeIndex] : undefined),
+        personaBarModuleType: (args._[extensionTypeIndex].toLowerCase() === 'persona bar' ? args._[personaBarModuleTypeIndex] : undefined),
         runInstall: args['--install'] || false,
     };
 }
@@ -38,12 +41,14 @@ async function promptForMissingOptions(options) {
     
     const defaultExtensionType = 'Module';
     const defaultModuleType = 'SPA';
+    const defaultPersonaBarModuleType = 'HTML';
 
     if (options.skipPrompts) {
       return {
         ...options,
         extensionType: options.extensionType || defaultExtensionType,
         moduleType: options.moduleType || defaultModuleType,
+        personaBarModuleType: options.personaBarModuleType || defaultPersonaBarModuleType
       };
     }
    
@@ -89,7 +94,24 @@ async function promptForMissingOptions(options) {
         });
     }
    
-    if (!options.git) {
+    if (!options.personaBarModuleType) {
+      questions.push({
+          type: 'list',
+          name: 'personaBarModuleType',
+          message: 'Please choose a Persona Bar module type to use',
+          when: (answers) => answers.extensionType === 'Persona Bar',
+          choices: [
+              'HTML',
+              'React',
+              'Vue',
+              'Angular', 
+              'AngularJS'
+          ],
+          default: defaultPersonaBarModuleType
+      });
+  }
+ 
+  if (!options.git) {
       questions.push({
         type: 'confirm',
         name: 'git',
@@ -103,6 +125,7 @@ async function promptForMissingOptions(options) {
       ...options,
       extensionType: options.extensionType || answers.extensionType,
       moduleType: options.moduleType || answers.moduleType,
+      personaBarModuleType: options.personaBarModuleType || answers.personaBarModuleType,
       git: options.git || answers.git,
     };
 }

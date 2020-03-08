@@ -42,6 +42,7 @@ export async function createProject(options) {
         options.extensionType.replace(' ', '-').toLowerCase()
     );
     if (options.moduleType !== undefined) templateDir = path.resolve(templateDir, options.moduleType.replace(' ', '-').toLowerCase());
+    if (options.personaBarModuleType !== undefined) templateDir = path.resolve(templateDir, options.personaBarModuleType.replace(' ', '-').toLowerCase());
     options.templateDirectory = templateDir;
 
     try {
