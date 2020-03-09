@@ -80,7 +80,7 @@ async function promptForMissingOptions(options) {
         questions.push({
             type: 'list',
             name: 'moduleType',
-            message: 'Please choose a module type to use (if applicable)',
+            message: 'Please choose a module type to use',
             when: (answers) => answers.extensionType === 'Module' || (options.extensionType ? options.extensionType.toLowerCase() === 'module' : false),
             choices: [
                 'SPA', 
