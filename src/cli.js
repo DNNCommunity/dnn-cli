@@ -5,10 +5,10 @@ import { createProject } from './main';
 function parseArgumentsIntoOptions(rawArgs) {
     const args = arg(
         {
-            '--git': Boolean,
+            /*'--git': Boolean,*/
             '--yes': Boolean,
             '--install': Boolean,
-            '-g': '--git',
+            /*'-g': '--git',*/
             '-y': '--yes',
             '-i': '--install',
         },
@@ -27,7 +27,7 @@ function parseArgumentsIntoOptions(rawArgs) {
 
     return {
         skipPrompts: args['--yes'] || false,
-        git: args['--git'] || false,
+        /*git: args['--git'] || false,*/
         extensionType: args._[extensionTypeIndex],
         moduleType: args._[moduleTypeIndex],
         personaBarModuleType: args._[moduleTypeIndex],
@@ -107,16 +107,16 @@ async function promptForMissingOptions(options) {
           ],
           default: defaultPersonaBarModuleType
       });
-  }
- 
-  if (!options.git) {
+    }
+    
+    /*if (!options.git) {
       questions.push({
         type: 'confirm',
         name: 'git',
         message: 'Initialize a git repository?',
         default: false,
       });
-    }
+    }*/
    
     const answers = await inquirer.prompt(questions);
     return {
@@ -124,7 +124,7 @@ async function promptForMissingOptions(options) {
       extensionType: options.extensionType || answers.extensionType,
       moduleType: options.moduleType || answers.moduleType,
       personaBarModuleType: options.personaBarModuleType || answers.personaBarModuleType,
-      git: options.git || answers.git,
+      /*git: options.git || answers.git,*/
     };
 }
    
