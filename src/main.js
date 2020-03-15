@@ -17,7 +17,7 @@ async function copyTemplateFiles(options) {
     });
 }
 
-async function initGit(options) {
+/*async function initGit(options) {
     const result = await execa('git', ['init'], {
         cwd: options.targetDirectory,
     });
@@ -25,7 +25,7 @@ async function initGit(options) {
         return Promise.reject(new Error('Failed to initialize git'));
     }
     return;
-}
+}*/
 
 async function gitClone(options) {
     let repo = 'https://github.com/DNNCommunity/starter-' + 
