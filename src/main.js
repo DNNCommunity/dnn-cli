@@ -17,16 +17,6 @@ async function copyTemplateFiles(options) {
     });
 }
 
-/*async function initGit(options) {
-    const result = await execa('git', ['init'], {
-        cwd: options.targetDirectory,
-    });
-    if (result.failed) {
-        return Promise.reject(new Error('Failed to initialize git'));
-    }
-    return;
-}*/
-
 async function gitClone(options) {
     let repo = 'https://github.com/DNNCommunity/starter-' + 
         options.extensionType.toLowerCase() + 
@@ -48,39 +38,7 @@ export async function createProject(options) {
         targetDirectory: options.targetDirectory || process.cwd(),
     };
 
-    const currentFileUrl = import.meta.url;
-    let templateDir = path.resolve(
-        url.fileURLToPath(currentFileUrl),
-        '..',
-        '..',
-        'extensions',
-        options.extensionType.replace(' ', '-').toLowerCase()
-    );
-    if (options.moduleType !== undefined && options.extensionType.toLowerCase() === 'module') {
-        templateDir = path.resolve(templateDir, options.moduleType.replace(' ', '-').toLowerCase());
-    }
-    if (options.personaBarModuleType !== undefined && options.extensionType.toLowerCase() === 'persona bar') {
-        templateDir = path.resolve(templateDir, options.personaBarModuleType.replace(' ', '-').toLowerCase());
-    }
-    options.templateDirectory = templateDir;
-
-    try {
-        await access(templateDir, fs.constants.R_OK);
-    } catch (err) {
-        console.error('%s Invalid project type', chalk.red.bold('ERROR'));
-        process.exit(1);
-    }
-
     const tasks = new Listr([
-    /*{
-        title: 'Copy project files',
-        task: () => copyTemplateFiles(options),
-    },
-    {
-        title: 'Initialize git',
-        task: () => initGit(options),
-        enabled: () => options.git,
-    },*/
     {
         title: 'Clone repository',
         task: () => gitClone(options),
