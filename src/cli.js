@@ -1,5 +1,7 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
+import chalk from 'chalk';
+import figlet from 'figlet';
 import { createProject } from './main';
 
 function parseArgumentsIntoOptions(rawArgs) {
@@ -127,9 +129,18 @@ async function promptForMissingOptions(options) {
       /*git: options.git || answers.git,*/
     };
 }
+
+function displayDnn() {
+    console.log(
+        chalk.cyanBright(
+            figlet.textSync('Dnn CLI', { horizontalLayout: 'full' })
+        )
+    );
+}
    
 export async function cli(args) {
     let options = parseArgumentsIntoOptions(args);
+    displayDnn();
     options = await promptForMissingOptions(options);
     //console.log(options);
     await createProject(options);
