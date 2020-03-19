@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/LICENSE-MIT-informational.svg)](https://opensource.org/licenses/MIT)
 
-![dnn-cli extension type screenshot](img/dnn-cli-extension-type.png)
+![dnn-cli extension type screenshot](https://github.com/DNNCommunity/dnn-cli/raw/master/img/dnn-cli-extension-type.png)
 
 ## Installation
 
