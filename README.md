@@ -23,7 +23,7 @@ npm install -g @dnncommunity/dnn-cli
 Once **dnn-cli** is installed, it may be used via Command Prompt, PowerShell, Terminal, etc.
 
 ``` sh
-dnn [create-extension] [extensionType] [moduleType] [--install | -i]
+dnn [create-extension] [extensionType] [moduleType | customExtensionRepo] [--install | -i]
 ```
 
 ### create-extension
@@ -37,15 +37,17 @@ dnn
 dnn create-extension
 ``` 
 
-It can be used to quickly setup a new local project by cloning any available starter project found within the [DNN Community organization on GitHub](https://github.com/DNNCommunity).  All [available project repositories](https://github.com/DNNCommunity?q=starter-&type=&language=) follow the repo naming convention of `starter-<extensionType>-<moduleType>`. 
+It can be used to quickly setup a new local project by cloning any available starter project found within the [DNN Community organization on GitHub](https://github.com/DNNCommunity).  All [available starter project repositories](https://github.com/DNNCommunity?q=starter-&type=&language=) follow the repo naming convention of `starter-<extensionType>-<moduleType>`. 
 
-A new local project can be quickly installed into an empty directory of your choice using the following CLI syntax. Optional `dnn` command arguments are indicated using brackets [].
+> It also supports custom git repositories of your chosing.
+
+A new local project can be quickly installed into an empty directory of your choice using the following CLI syntax. Optional `dnn` command arguments are indicated using brackets [ ].
 
 ``` sh
 dnn [extensionType] [moduleType | customExtensionRepo] [--install | -i]
 ```
 
-Upon running the command and responding to any applicable prompts, the new project will be created by cloning the starter project from the 
+Upon running the command and responding to any applicable prompts, the new project will be cloned in the directory from which the `dnn-cli` command was run.
 
 ## Examples
 
