@@ -18,10 +18,10 @@ async function copyTemplateFiles(options) {
 }
 
 async function gitClone(options) {
-    let repo = 'https://github.com/DNNCommunity/starter-' + 
+    let repo = (options.extensionType.toLowerCase() !== '*custom' ? 'https://github.com/DNNCommunity/starter-' + 
         options.extensionType.toLowerCase() + 
         (options.moduleType !== undefined && options.extensionType.toLowerCase() === 'module' ? '-' + options.moduleType.replace(' ', '-').toLowerCase() : '') + 
-        (options.personaBarModuleType !== undefined && options.extensionType.toLowerCase() === 'persona bar' ? '-' + options.personaBarModuleType.replace(' ', '-').toLowerCase() : '');
+        (options.personaBarModuleType !== undefined && options.extensionType.toLowerCase() === 'persona bar' ? '-' + options.personaBarModuleType.replace(' ', '-').toLowerCase() : '') : options.customExtensionRepo);
 
     const result = await execa('git', ['clone', repo, '.'], {
         cwd: options.targetDirectory,
