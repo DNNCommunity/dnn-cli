@@ -42,7 +42,7 @@ It can be used to quickly setup a new local project by cloning any available sta
 A new local project can be quickly installed into an empty directory of your choice using the following CLI syntax. Optional `dnn` command arguments are indicated using brackets [].
 
 ``` sh
-dnn [extensionType] [moduleType] [--install | -i]
+dnn [extensionType] [moduleType | customExtensionRepo] [--install | -i]
 ```
 
 Upon running the command and responding to any applicable prompts, the new project will be created by cloning the starter project from the 
@@ -55,7 +55,7 @@ Upon running the command and responding to any applicable prompts, the new proje
 dnn
 ```
 
-> This will result in being prompted for `extensionType` and `moduleType` (depending on **extensionType** selected).
+> This will result in being prompted for `extensionType` and `moduleType` (or `customExtensionRepo`) depending on **extensionType** selected.
 
 ### Using [extensionType] only:
 
@@ -63,12 +63,18 @@ dnn
 dnn theme
 ```
 
-> For an `extensionType` that does not have a `moduleType`, no prompts will be displayed and the new project will be created. For an `extensionType` that does have a `moduleType` (e.g., "Module" or "Persona Bar"), a prompt will be displayed to select the desired `moduletype`.
+> For an `extensionType` that does not have a `moduleType` or `customExtensionRepo`, no prompts will be displayed and the new project will be created. For an `extensionType` that does have a `moduleType` or `customExtensionRepo` (e.g., "Module", "Persona Bar", "*Custom"), a prompt will be displayed to select the desired `moduletype` or enter a valid `customExtensionRepo`.
 
 ### Using [extensionType] and [moduleType]:
 
 ``` sh
 dnn module web-forms
+```
+
+### Using [extensionType] and [customExtensionRepo]:
+
+``` sh
+dnn *custom https://github.com/<user|org>/<repo>.git
 ```
 
 ### Extension Types & Module Types
@@ -97,6 +103,7 @@ None of these are case sensitive. Extension types and module types with spaces i
 * Theme Object (theme-object)
 * Theme (theme)
 * Widget (widget)
+* `*Custom (*custom)`
 
 ### Options
 
