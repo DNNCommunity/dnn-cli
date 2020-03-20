@@ -19,7 +19,7 @@ async function copyTemplateFiles(options) {
 
 async function gitClone(options) {
     let repo = (options.extensionType.toLowerCase() !== '*custom' ? 'https://github.com/DNNCommunity/starter-' + 
-        options.extensionType.toLowerCase() + 
+        options.extensionType.replace(' ', '-').toLowerCase() + 
         (options.moduleType !== undefined && options.extensionType.toLowerCase() === 'module' ? '-' + options.moduleType.replace(' ', '-').toLowerCase() : '') + 
         (options.personaBarModuleType !== undefined && options.extensionType.toLowerCase() === 'persona bar' ? '-' + options.personaBarModuleType.replace(' ', '-').toLowerCase() : '') : options.customExtensionRepo);
 
