@@ -8,31 +8,6 @@ import execa from 'execa';
 import Listr from 'listr';
 import { projectInstall } from 'pkg-install';
 
-const access = promisify(fs.access);
-const copy = promisify(ncp);
-
-async function copyTemplateFiles(options) {
-    return copy(options.templateDirectory, options.targetDirectory, {
-        clobber: false,
-    });
-}
-
-async function gitClone(options) {
-    let repo = (options.extensionType.toLowerCase() !== '*custom' ? 'https://github.com/DNNCommunity/starter-' + 
-        options.extensionType.replace(' ', '-').toLowerCase() + 
-        (options.moduleType !== undefined && options.extensionType.toLowerCase() === 'module' ? '-' + options.moduleType.replace(' ', '-').toLowerCase() : '') + 
-        (options.personaBarModuleType !== undefined && options.extensionType.toLowerCase() === 'persona bar' ? '-' + options.personaBarModuleType.replace(' ', '-').toLowerCase() : '') +
-        '.git' : options.customExtensionRepo);
-
-    const result = await execa('git', ['clone', repo, '.'], {
-        cwd: options.targetDirectory,
-    });
-    if (result.failed) {
-        return Promise.reject(new Error('Failed to clone git repository for ' + repo));
-    }
-    return;
-}
-
 export async function createProject(options) {
     options = {
         ...options,
@@ -41,25 +16,45 @@ export async function createProject(options) {
 
     const tasks = new Listr([
     {
-        title: 'Clone repository',
-        task: () => gitClone(options),
+        title: 'Cloning repository...',
+        task: async (ctx, task) => {
+            let repo = (options.extensionType.toLowerCase() !== '*custom' ? 'https://github.com/DNNCommunity/starter-' + 
+            options.extensionType.replace(' ', '-').toLowerCase() + 
+            (options.moduleType !== undefined && options.extensionType.toLowerCase() === 'module' ? '-' + options.moduleType.replace(' ', '-').toLowerCase() : '') + 
+            (options.personaBarModuleType !== undefined && options.extensionType.toLowerCase() === 'persona bar' ? '-' + options.personaBarModuleType.replace(' ', '-').toLowerCase() : '') +
+            '.git' : options.customExtensionRepo);
+
+            await execa('git', ['clone', repo, '.'], {
+                cwd: options.targetDirectory
+            }).catch((error) => {
+				ctx.cloned = false;
+				task.title = `Cloning repository ` + chalk.yellow.bold('(ERROR)');
+				task.skip(error.stderr);
+			})
+        },
     },
     {
-        title: 'Install dependencies',
-        task: () =>
-        projectInstall({
-            cwd: options.targetDirectory,
-            prefer: 'yarn'
-        }),
-        skip: () =>
-        !options.runInstall
+        title: 'Installing dependencies...',
+        enabled: ctx => ctx.cloned !== false,
+        task: (ctx, task) => projectInstall({
+                cwd: options.targetDirectory,
+                prefer: 'yarn'
+            }
+        ),
+        skip: () => !options.runInstall
             ? 'Pass --install to automatically install dependencies'
             : undefined,
     },
+    {
+        title: '...',
+        enabled: ctx => ctx.cloned !== false,
+        task: (ctx, task) => { 
+            task.title = `Project ` + chalk.green.bold('READY');
+        } 
+    }
     ]);
  
     await tasks.run();
 
-    console.log('%s Project ready', chalk.green.bold('DONE'));
     return true;
 }
