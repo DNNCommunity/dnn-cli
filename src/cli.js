@@ -71,7 +71,7 @@ async function promptForMissingOptions(options) {
               'Provider',
               'Scheduled Job',
               'Theme',
-              'Skin Object',
+              'Theme Object',
               'Widget',
               '*Custom'
             ],
