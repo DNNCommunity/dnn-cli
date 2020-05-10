@@ -72,6 +72,7 @@ async function promptForMissingOptions(options) {
               'Scheduled Job',
               'Theme',
               'Theme Object',
+              'Web API',
               'Widget',
               '*Custom'
             ],
