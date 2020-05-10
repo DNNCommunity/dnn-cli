@@ -104,6 +104,7 @@ None of these are case sensitive. Extension types and module types with spaces i
 * Scheduled Job (scheduled-job)
 * Theme Object (theme-object)
 * Theme (theme)
+* Web API (web-api)
 * Widget (widget)
 * `*Custom (*custom)`
 
